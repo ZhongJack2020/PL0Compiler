@@ -1,0 +1,4 @@
+var real a:=3,b;
+begin
+while(a<3)[a:=a+1;b:=a*3;]
+end

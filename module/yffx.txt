@@ -1,0 +1,47 @@
+Type ::= Real
+Varable ::= Iden
+Asign_Varable ::=Varable
+Const ::= IntNo
+Expr ::= Const
+Type Asign_Varable := Expr
+Varable ::= Iden
+VarList ::= VarList , Varable
+VarDefList ::= VarList
+VarDef ::= Var VarDefList
+W	::= While
+Varable ::= Iden
+Expr ::= Varable
+RelationOp ::= < 
+Const ::= IntNo
+Expr ::= Const
+BoolExpr ::= Expr RelationOp Expr
+Wd	::= W (BoolExpr) 
+Varable ::= Iden
+Asign_Varable ::=Varable
+Varable ::= Iden
+Expr ::= Varable
+Const ::= IntNo
+Expr ::= Const
+Expr ::= Expr+Expr
+AsignState ::= Asign_Varable:=Expr
+Statement ::= AsignState;
+Varable ::= Iden
+Asign_Varable ::=Varable
+Varable ::= Iden
+Expr ::= Varable
+Const ::= IntNo
+Expr ::= Const
+Expr ::= Expr*Expr
+AsignState ::= Asign_Varable:=Expr
+Statement ::= AsignState;
+StateList ::= Statement
+Expr ::= Const
+StateList ::= Statement StateList
+[StateList] 
+Statement ::= Wd ComplexState;
+StateList ::= Statement
+Expr ::= Const
+SubProg ::= VarDef Begin StateList End
+Program ::= subProg
+
+Compile successfully!

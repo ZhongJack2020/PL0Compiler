@@ -1,0 +1,32 @@
+//if
+Var integer a,d,e:=8;
+Var real b,c;
+Begin
+   c:=2;
+   if(e=8)
+  [e:=0;]
+   [a:=a+1;b:=a*3;]
+End
+
+
+//while
+
+var real a:=3,b;
+begin
+while(a<3)[a:=a+1;b:=a*3;]
+end
+
+//bool
+
+var integer a:=3,b:=5;
+var integer c:=a*(b-2);
+begin
+        if(c>9 & (a<2 | b+3>9))
+            [a:=6;]
+        else
+            [a:=7;]
+end
+
+
+
+
