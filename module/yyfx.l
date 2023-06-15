@@ -37,6 +37,7 @@ letter      		[A-Za-z]
 alnum		[A-Za-z0-9]
 d		[0-9]
 white		[\t\n\040]
+Annotation ("//".*)|("/*"[^("*/")]*"*/") 
 %start		COMMENT
 %%
 
@@ -90,6 +91,7 @@ white		[\t\n\040]
 .			{printf("Invalid char %s\n",yytext);
 			 return ERRORCHAR;
 			}
+{Annotation} {;}
 %%
 
 

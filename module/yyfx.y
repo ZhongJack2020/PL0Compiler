@@ -172,7 +172,7 @@ VarList	:  VarList ',' Varable
 	|  Type  Asign_Varable':''='Expr
 			{
 				$$=$1;FillType($2,$$);
-				fprintf(yffx, "Type Asign_Varable := Expr\n");
+				fprintf(yffx, "VarList ::= Type Asign_Varable := Expr\n");
 				if(VarList[$2].type==$5.type)
 					GEN(":=",$5.place,0,$2);
 				else if($5.type==INTTYPE && VarList[$2].type==REALTYPE)
@@ -203,7 +203,7 @@ Type	:Integer
 	;
 	
 
-Asign_Varable:  Varable {$$=$1;fprintf(yffx, "Asign_Varable ::=Varable\n");}
+Asign_Varable:  Varable {$$=$1;fprintf(yffx, "Asign_Varable ::= Varable\n");}
 	;
 Varable:	Iden
 			{ 
@@ -396,7 +396,6 @@ StateList:	Statement
 			{
 				fprintf(yffx, "StateList ::= Statement\n");
 				$$=$1;BackPatch($1,NXQ);
-				fprintf(yffx, "Expr ::= Const\n");
 			}
 	|Statement   StateList
 			{
@@ -444,17 +443,17 @@ I_T	:   If '(' BoolExpr ')' Then
 	;
 Wd	:   W '(' BoolExpr ')' 
 		{
-			fprintf(yffx, "Wd	::= W (BoolExpr) \n");
+			fprintf(yffx, "Wd ::= W (BoolExpr) \n");
 			BackPatch($3.TC,NXQ);$$.QUAD=$1;$$.CH=$3.FC;
 		}
 	;
-W	:   While{$$=NXQ;fprintf(yffx, "W	::= While\n");}//将Expr第一四元式序号记录下来，以便在翻译完statement后产生一个跳转到此处的四元式。
+W	:   While{$$=NXQ;fprintf(yffx, "W ::= While\n");}//将Expr第一四元式序号记录下来，以便在翻译完statement后产生一个跳转到此处的四元式。
 		//翻译BoolExpr后使用当前NXQ（Statement的第一四元式序号）回填TC链，将FC属性传递给CH属性，方便后续合并和回填。
 	;
 
 ComplexState:	'[' StateList ']'  
 				{	
-					fprintf(yffx, "[StateList] \n");
+					fprintf(yffx, "ComplexState ::= [StateList] \n");
 					$$=$2;	
 				}
 	;

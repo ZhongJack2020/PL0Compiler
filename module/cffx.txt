@@ -1,29 +1,35 @@
-K : var 
-I : real 
-I : a 
-O : := 
-C : 3 
-D : , 
-I : b 
-D : ; 
-K : begin 
-K : while 
-O : ( 
-I : a 
-O : < 
-C : 3 
-O : ) 
-O : [ 
-I : a 
-O : := 
-I : a 
-C : +1 
-D : ; 
-I : b 
-O : := 
-I : a 
-O : * 
-C : 3 
-D : ; 
-O : ] 
-K : end 
+Keyword : var 
+Identifier : real 
+Identifier : a 
+Operator : := 
+Constant : 3 
+Delimiter : , 
+Identifier : b 
+Delimiter : ; 
+Annotation : //variable define 
+Annotation : /*
+----------------
+procedure
+----------------
+*/ 
+Keyword : begin 
+Keyword : while 
+Operator : ( 
+Identifier : a 
+Operator : < 
+Constant : 3 
+Operator : ) 
+Operator : [ 
+Identifier : a 
+Operator : := 
+Identifier : a 
+Constant : +1 
+Delimiter : ; 
+Identifier : b 
+Operator : := 
+Identifier : a 
+Operator : * 
+Constant : 3 
+Delimiter : ; 
+Operator : ] 
+Keyword : end 

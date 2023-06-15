@@ -14,18 +14,19 @@ Delimiter  [\,\;\.]
 Space (\ )
 Tab (\t)
 Other [^{KeyWord}{Identifier}{Constant}{Operator}{Delimiter}]
+Annotation ("//".*)|("/*"[^("*/")]*"*/") 
 
 %%
 
 
 
-{KeyWord} {fprintf(fp, "K : %s \n", yytext); }
+{KeyWord} {fprintf(fp, "Keyword : %s \n", yytext); }
 {Identifier} {
 	if(yyleng > 10){
 		fprintf(fp, "Error!Expected a shorter IDENTIFIER!\n");
 	}
 	else{
-		fprintf(fp, "I : %s \n", yytext); 
+		fprintf(fp, "Identifier : %s \n", yytext); 
 	}
 }  
 {Constant} {
@@ -33,17 +34,17 @@ Other [^{KeyWord}{Identifier}{Constant}{Operator}{Delimiter}]
 		fprintf(fp, "Error!Expected a shorter CONSTANT!\n");
 	}
 	else{
-		fprintf(fp, "C : %s \n", yytext);
+		fprintf(fp, "Constant : %s \n", yytext);
 	}
 }
-{Operator} {fprintf(fp, "O : %s \n", yytext);}
-{Delimiter} {fprintf(fp, "D : %s \n", yytext);}
+{Operator} {fprintf(fp, "Operator : %s \n", yytext);}
+{Delimiter} {fprintf(fp, "Delimiter : %s \n", yytext);}
 
 \n {;}
 {Space} {;}
 {Tab} {;}
 {Other} {fprintf(fp, "Error! %s\n", yytext); }
-
+{Annotation} {fprintf(fp, "Annotation : %s \n", yytext);}
 
 %%
 int main(){
