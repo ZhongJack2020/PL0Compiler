@@ -8,4 +8,38 @@ Varable ::= Iden
 VarList ::= VarList , Varable
 VarDefList ::= VarList
 VarDef ::= Var VarDefList
-(9,7):syntax error!
+W ::= While
+Varable ::= Iden
+Expr ::= Varable
+RelationOp ::= < 
+Const ::= IntNo
+Expr ::= Const
+BoolExpr ::= Expr RelationOp Expr
+Wd ::= W (BoolExpr) 
+Varable ::= Iden
+Asign_Varable ::= Varable
+Varable ::= Iden
+Expr ::= Varable
+Const ::= IntNo
+Expr ::= Const
+Expr ::= Expr+Expr
+AsignState ::= Asign_Varable:=Expr
+Statement ::= AsignState;
+Varable ::= Iden
+Asign_Varable ::= Varable
+Varable ::= Iden
+Expr ::= Varable
+Const ::= IntNo
+Expr ::= Const
+Expr ::= Expr*Expr
+AsignState ::= Asign_Varable:=Expr
+Statement ::= AsignState;
+StateList ::= Statement
+StateList ::= Statement StateList
+ComplexState ::= [StateList] 
+Statement ::= Wd ComplexState;
+StateList ::= Statement
+SubProg ::= VarDef Begin StateList End
+Program ::= subProg
+
+Compile successfully!

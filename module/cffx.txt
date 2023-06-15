@@ -13,7 +13,6 @@ procedure
 ----------------
 */ 
 Keyword : begin 
-Delimiter : ; 
 Keyword : while 
 Operator : ( 
 Identifier : a 

@@ -1,0 +1,1274 @@
+Terminals unused in grammar
+
+   Program
+
+
+Grammar
+
+    0 $accept: ProgDef $end
+
+    1 ProgDef: SubProg
+
+    2 SubProg: VarDef Begin StateList End
+
+    3 VarDef: VarDef Var VarDefList
+    4       | Var VarDefList
+
+    5 VarDefList: VarDefList VarList ';'
+    6           | VarList ';'
+
+    7 VarList: VarList ',' Varable
+    8        | Type Varable
+    9        | VarList ',' Asign_Varable ':' '=' Expr
+   10        | Type Asign_Varable ':' '=' Expr
+
+   11 Type: Integer
+   12     | Real
+
+   13 Asign_Varable: Varable
+
+   14 Varable: Iden
+
+   15 AsignState: Asign_Varable ':' '=' Expr
+
+   16 Expr: Expr '+' Expr
+   17     | Expr '-' Expr
+   18     | Expr '*' Expr
+   19     | Expr '/' Expr
+   20     | Expr '%' Expr
+   21     | '(' Expr ')'
+   22     | '-' Expr
+   23     | Varable
+   24     | Const
+
+   25 StateList: Statement
+   26          | Statement StateList
+
+   27 Statement: AsignState ';'
+   28          | I_T_E ComplexState
+   29          | Wd ComplexState
+
+   30 I_T_E: I_T ComplexState Else
+
+   31 I_T: If '(' BoolExpr ')' Then
+   32    | If '(' BoolExpr ')'
+
+   33 Wd: W '(' BoolExpr ')'
+
+   34 W: While
+
+   35 ComplexState: '[' StateList ']'
+
+   36 BoolExpr: Expr RelationOp Expr
+
+   37 $@1: /* empty */
+
+   38 BoolExpr: BoolExpr '&' $@1 BoolExpr
+
+   39 $@2: /* empty */
+
+   40 BoolExpr: BoolExpr '|' $@2 BoolExpr
+   41         | '!' BoolExpr
+   42         | '(' BoolExpr ')'
+
+   43 Const: IntNo
+   44      | RealNo
+
+   45 RelationOp: '<'
+   46           | '>'
+   47           | '='
+   48           | GE
+   49           | NE
+   50           | LE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 41
+'%' (37) 20
+'&' (38) 38
+'(' (40) 21 31 32 33 42
+')' (41) 21 31 32 33 42
+'*' (42) 18
+'+' (43) 16
+',' (44) 7 9
+'-' (45) 17 22
+'/' (47) 19
+':' (58) 9 10 15
+';' (59) 5 6 27
+'<' (60) 45
+'=' (61) 9 10 15 47
+'>' (62) 46
+'[' (91) 35
+']' (93) 35
+'|' (124) 40
+error (256)
+Iden (300) 14
+IntNo (301) 43
+RealNo (302) 44
+Program (400)
+Begin (401) 2
+End (402) 2
+Var (403) 3 4
+Integer (404) 11
+Real (405) 12
+While (406) 34
+If (407) 31 32
+Then (408) 31
+Else (409) 30
+LE (500) 50
+GE (501) 48
+NE (502) 49
+UMINUS (504)
+
+
+Nonterminals, with rules where they appear
+
+$accept (38)
+    on left: 0
+ProgDef (39)
+    on left: 1, on right: 0
+SubProg (40)
+    on left: 2, on right: 1
+VarDef (41)
+    on left: 3 4, on right: 2 3
+VarDefList (42)
+    on left: 5 6, on right: 3 4 5
+VarList (43)
+    on left: 7 8 9 10, on right: 5 6 7 9
+Type (44)
+    on left: 11 12, on right: 8 10
+Asign_Varable (45)
+    on left: 13, on right: 9 10 15
+Varable (46)
+    on left: 14, on right: 7 8 13 23
+AsignState (47)
+    on left: 15, on right: 27
+Expr (48)
+    on left: 16 17 18 19 20 21 22 23 24, on right: 9 10 15 16 17 18
+    19 20 21 22 36
+StateList (49)
+    on left: 25 26, on right: 2 26 35
+Statement (50)
+    on left: 27 28 29, on right: 25 26
+I_T_E (51)
+    on left: 30, on right: 28
+I_T (52)
+    on left: 31 32, on right: 30
+Wd (53)
+    on left: 33, on right: 29
+W (54)
+    on left: 34, on right: 33
+ComplexState (55)
+    on left: 35, on right: 28 29 30
+BoolExpr (56)
+    on left: 36 38 40 41 42, on right: 31 32 33 38 40 41 42
+$@1 (57)
+    on left: 37, on right: 38
+$@2 (58)
+    on left: 39, on right: 40
+Const (59)
+    on left: 43 44, on right: 24
+RelationOp (60)
+    on left: 45 46 47 48 49 50, on right: 36
+
+
+state 0
+
+    0 $accept: . ProgDef $end
+
+    Var  shift, and go to state 1
+
+    ProgDef  go to state 2
+    SubProg  go to state 3
+    VarDef   go to state 4
+
+
+state 1
+
+    4 VarDef: Var . VarDefList
+
+    Integer  shift, and go to state 5
+    Real     shift, and go to state 6
+
+    VarDefList  go to state 7
+    VarList     go to state 8
+    Type        go to state 9
+
+
+state 2
+
+    0 $accept: ProgDef . $end
+
+    $end  shift, and go to state 10
+
+
+state 3
+
+    1 ProgDef: SubProg .
+
+    $default  reduce using rule 1 (ProgDef)
+
+
+state 4
+
+    2 SubProg: VarDef . Begin StateList End
+    3 VarDef: VarDef . Var VarDefList
+
+    Begin  shift, and go to state 11
+    Var    shift, and go to state 12
+
+
+state 5
+
+   11 Type: Integer .
+
+    $default  reduce using rule 11 (Type)
+
+
+state 6
+
+   12 Type: Real .
+
+    $default  reduce using rule 12 (Type)
+
+
+state 7
+
+    4 VarDef: Var VarDefList .
+    5 VarDefList: VarDefList . VarList ';'
+
+    Integer  shift, and go to state 5
+    Real     shift, and go to state 6
+
+    $default  reduce using rule 4 (VarDef)
+
+    VarList  go to state 13
+    Type     go to state 9
+
+
+state 8
+
+    6 VarDefList: VarList . ';'
+    7 VarList: VarList . ',' Varable
+    9        | VarList . ',' Asign_Varable ':' '=' Expr
+
+    ';'  shift, and go to state 14
+    ','  shift, and go to state 15
+
+
+state 9
+
+    8 VarList: Type . Varable
+   10        | Type . Asign_Varable ':' '=' Expr
+
+    Iden  shift, and go to state 16
+
+    Asign_Varable  go to state 17
+    Varable        go to state 18
+
+
+state 10
+
+    0 $accept: ProgDef $end .
+
+    $default  accept
+
+
+state 11
+
+    2 SubProg: VarDef Begin . StateList End
+
+    Iden   shift, and go to state 16
+    While  shift, and go to state 19
+    If     shift, and go to state 20
+
+    Asign_Varable  go to state 21
+    Varable        go to state 22
+    AsignState     go to state 23
+    StateList      go to state 24
+    Statement      go to state 25
+    I_T_E          go to state 26
+    I_T            go to state 27
+    Wd             go to state 28
+    W              go to state 29
+
+
+state 12
+
+    3 VarDef: VarDef Var . VarDefList
+
+    Integer  shift, and go to state 5
+    Real     shift, and go to state 6
+
+    VarDefList  go to state 30
+    VarList     go to state 8
+    Type        go to state 9
+
+
+state 13
+
+    5 VarDefList: VarDefList VarList . ';'
+    7 VarList: VarList . ',' Varable
+    9        | VarList . ',' Asign_Varable ':' '=' Expr
+
+    ';'  shift, and go to state 31
+    ','  shift, and go to state 15
+
+
+state 14
+
+    6 VarDefList: VarList ';' .
+
+    $default  reduce using rule 6 (VarDefList)
+
+
+state 15
+
+    7 VarList: VarList ',' . Varable
+    9        | VarList ',' . Asign_Varable ':' '=' Expr
+
+    Iden  shift, and go to state 16
+
+    Asign_Varable  go to state 32
+    Varable        go to state 33
+
+
+state 16
+
+   14 Varable: Iden .
+
+    $default  reduce using rule 14 (Varable)
+
+
+state 17
+
+   10 VarList: Type Asign_Varable . ':' '=' Expr
+
+    ':'  shift, and go to state 34
+
+
+state 18
+
+    8 VarList: Type Varable .
+   13 Asign_Varable: Varable .
+
+    ':'       reduce using rule 13 (Asign_Varable)
+    $default  reduce using rule 8 (VarList)
+
+
+state 19
+
+   34 W: While .
+
+    $default  reduce using rule 34 (W)
+
+
+state 20
+
+   31 I_T: If . '(' BoolExpr ')' Then
+   32    | If . '(' BoolExpr ')'
+
+    '('  shift, and go to state 35
+
+
+state 21
+
+   15 AsignState: Asign_Varable . ':' '=' Expr
+
+    ':'  shift, and go to state 36
+
+
+state 22
+
+   13 Asign_Varable: Varable .
+
+    $default  reduce using rule 13 (Asign_Varable)
+
+
+state 23
+
+   27 Statement: AsignState . ';'
+
+    ';'  shift, and go to state 37
+
+
+state 24
+
+    2 SubProg: VarDef Begin StateList . End
+
+    End  shift, and go to state 38
+
+
+state 25
+
+   25 StateList: Statement .
+   26          | Statement . StateList
+
+    Iden   shift, and go to state 16
+    While  shift, and go to state 19
+    If     shift, and go to state 20
+
+    $default  reduce using rule 25 (StateList)
+
+    Asign_Varable  go to state 21
+    Varable        go to state 22
+    AsignState     go to state 23
+    StateList      go to state 39
+    Statement      go to state 25
+    I_T_E          go to state 26
+    I_T            go to state 27
+    Wd             go to state 28
+    W              go to state 29
+
+
+state 26
+
+   28 Statement: I_T_E . ComplexState
+
+    '['  shift, and go to state 40
+
+    ComplexState  go to state 41
+
+
+state 27
+
+   30 I_T_E: I_T . ComplexState Else
+
+    '['  shift, and go to state 40
+
+    ComplexState  go to state 42
+
+
+state 28
+
+   29 Statement: Wd . ComplexState
+
+    '['  shift, and go to state 40
+
+    ComplexState  go to state 43
+
+
+state 29
+
+   33 Wd: W . '(' BoolExpr ')'
+
+    '('  shift, and go to state 44
+
+
+state 30
+
+    3 VarDef: VarDef Var VarDefList .
+    5 VarDefList: VarDefList . VarList ';'
+
+    Integer  shift, and go to state 5
+    Real     shift, and go to state 6
+
+    $default  reduce using rule 3 (VarDef)
+
+    VarList  go to state 13
+    Type     go to state 9
+
+
+state 31
+
+    5 VarDefList: VarDefList VarList ';' .
+
+    $default  reduce using rule 5 (VarDefList)
+
+
+state 32
+
+    9 VarList: VarList ',' Asign_Varable . ':' '=' Expr
+
+    ':'  shift, and go to state 45
+
+
+state 33
+
+    7 VarList: VarList ',' Varable .
+   13 Asign_Varable: Varable .
+
+    ':'       reduce using rule 13 (Asign_Varable)
+    $default  reduce using rule 7 (VarList)
+
+
+state 34
+
+   10 VarList: Type Asign_Varable ':' . '=' Expr
+
+    '='  shift, and go to state 46
+
+
+state 35
+
+   31 I_T: If '(' . BoolExpr ')' Then
+   32    | If '(' . BoolExpr ')'
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 53
+    BoolExpr  go to state 54
+    Const     go to state 55
+
+
+state 36
+
+   15 AsignState: Asign_Varable ':' . '=' Expr
+
+    '='  shift, and go to state 56
+
+
+state 37
+
+   27 Statement: AsignState ';' .
+
+    $default  reduce using rule 27 (Statement)
+
+
+state 38
+
+    2 SubProg: VarDef Begin StateList End .
+
+    $default  reduce using rule 2 (SubProg)
+
+
+state 39
+
+   26 StateList: Statement StateList .
+
+    $default  reduce using rule 26 (StateList)
+
+
+state 40
+
+   35 ComplexState: '[' . StateList ']'
+
+    Iden   shift, and go to state 16
+    While  shift, and go to state 19
+    If     shift, and go to state 20
+
+    Asign_Varable  go to state 21
+    Varable        go to state 22
+    AsignState     go to state 23
+    StateList      go to state 57
+    Statement      go to state 25
+    I_T_E          go to state 26
+    I_T            go to state 27
+    Wd             go to state 28
+    W              go to state 29
+
+
+state 41
+
+   28 Statement: I_T_E ComplexState .
+
+    $default  reduce using rule 28 (Statement)
+
+
+state 42
+
+   30 I_T_E: I_T ComplexState . Else
+
+    Else  shift, and go to state 58
+
+
+state 43
+
+   29 Statement: Wd ComplexState .
+
+    $default  reduce using rule 29 (Statement)
+
+
+state 44
+
+   33 Wd: W '(' . BoolExpr ')'
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 53
+    BoolExpr  go to state 59
+    Const     go to state 55
+
+
+state 45
+
+    9 VarList: VarList ',' Asign_Varable ':' . '=' Expr
+
+    '='  shift, and go to state 60
+
+
+state 46
+
+   10 VarList: Type Asign_Varable ':' '=' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 62
+    Const    go to state 55
+
+
+state 47
+
+   43 Const: IntNo .
+
+    $default  reduce using rule 43 (Const)
+
+
+state 48
+
+   44 Const: RealNo .
+
+    $default  reduce using rule 44 (Const)
+
+
+state 49
+
+   41 BoolExpr: '!' . BoolExpr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 53
+    BoolExpr  go to state 63
+    Const     go to state 55
+
+
+state 50
+
+   22 Expr: '-' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 64
+    Const    go to state 55
+
+
+state 51
+
+   21 Expr: '(' . Expr ')'
+   42 BoolExpr: '(' . BoolExpr ')'
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 65
+    BoolExpr  go to state 66
+    Const     go to state 55
+
+
+state 52
+
+   23 Expr: Varable .
+
+    $default  reduce using rule 23 (Expr)
+
+
+state 53
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   36 BoolExpr: Expr . RelationOp Expr
+
+    LE   shift, and go to state 67
+    GE   shift, and go to state 68
+    NE   shift, and go to state 69
+    '<'  shift, and go to state 70
+    '>'  shift, and go to state 71
+    '='  shift, and go to state 72
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    RelationOp  go to state 78
+
+
+state 54
+
+   31 I_T: If '(' BoolExpr . ')' Then
+   32    | If '(' BoolExpr . ')'
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   40         | BoolExpr . '|' $@2 BoolExpr
+
+    '|'  shift, and go to state 79
+    '&'  shift, and go to state 80
+    ')'  shift, and go to state 81
+
+
+state 55
+
+   24 Expr: Const .
+
+    $default  reduce using rule 24 (Expr)
+
+
+state 56
+
+   15 AsignState: Asign_Varable ':' '=' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 82
+    Const    go to state 55
+
+
+state 57
+
+   35 ComplexState: '[' StateList . ']'
+
+    ']'  shift, and go to state 83
+
+
+state 58
+
+   30 I_T_E: I_T ComplexState Else .
+
+    $default  reduce using rule 30 (I_T_E)
+
+
+state 59
+
+   33 Wd: W '(' BoolExpr . ')'
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   40         | BoolExpr . '|' $@2 BoolExpr
+
+    '|'  shift, and go to state 79
+    '&'  shift, and go to state 80
+    ')'  shift, and go to state 84
+
+
+state 60
+
+    9 VarList: VarList ',' Asign_Varable ':' '=' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 85
+    Const    go to state 55
+
+
+state 61
+
+   21 Expr: '(' . Expr ')'
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 86
+    Const    go to state 55
+
+
+state 62
+
+   10 VarList: Type Asign_Varable ':' '=' Expr .
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 10 (VarList)
+
+
+state 63
+
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   40         | BoolExpr . '|' $@2 BoolExpr
+   41         | '!' BoolExpr .
+
+    $default  reduce using rule 41 (BoolExpr)
+
+
+state 64
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   22     | '-' Expr .
+
+    $default  reduce using rule 22 (Expr)
+
+
+state 65
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   21     | '(' Expr . ')'
+   36 BoolExpr: Expr . RelationOp Expr
+
+    LE   shift, and go to state 67
+    GE   shift, and go to state 68
+    NE   shift, and go to state 69
+    '<'  shift, and go to state 70
+    '>'  shift, and go to state 71
+    '='  shift, and go to state 72
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+    ')'  shift, and go to state 87
+
+    RelationOp  go to state 78
+
+
+state 66
+
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   40         | BoolExpr . '|' $@2 BoolExpr
+   42         | '(' BoolExpr . ')'
+
+    '|'  shift, and go to state 79
+    '&'  shift, and go to state 80
+    ')'  shift, and go to state 88
+
+
+state 67
+
+   50 RelationOp: LE .
+
+    $default  reduce using rule 50 (RelationOp)
+
+
+state 68
+
+   48 RelationOp: GE .
+
+    $default  reduce using rule 48 (RelationOp)
+
+
+state 69
+
+   49 RelationOp: NE .
+
+    $default  reduce using rule 49 (RelationOp)
+
+
+state 70
+
+   45 RelationOp: '<' .
+
+    $default  reduce using rule 45 (RelationOp)
+
+
+state 71
+
+   46 RelationOp: '>' .
+
+    $default  reduce using rule 46 (RelationOp)
+
+
+state 72
+
+   47 RelationOp: '=' .
+
+    $default  reduce using rule 47 (RelationOp)
+
+
+state 73
+
+   16 Expr: Expr '+' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 89
+    Const    go to state 55
+
+
+state 74
+
+   17 Expr: Expr '-' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 90
+    Const    go to state 55
+
+
+state 75
+
+   18 Expr: Expr '*' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 91
+    Const    go to state 55
+
+
+state 76
+
+   19 Expr: Expr '/' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 92
+    Const    go to state 55
+
+
+state 77
+
+   20 Expr: Expr '%' . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 93
+    Const    go to state 55
+
+
+state 78
+
+   36 BoolExpr: Expr RelationOp . Expr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 61
+
+    Varable  go to state 52
+    Expr     go to state 94
+    Const    go to state 55
+
+
+state 79
+
+   40 BoolExpr: BoolExpr '|' . $@2 BoolExpr
+
+    $default  reduce using rule 39 ($@2)
+
+    $@2  go to state 95
+
+
+state 80
+
+   38 BoolExpr: BoolExpr '&' . $@1 BoolExpr
+
+    $default  reduce using rule 37 ($@1)
+
+    $@1  go to state 96
+
+
+state 81
+
+   31 I_T: If '(' BoolExpr ')' . Then
+   32    | If '(' BoolExpr ')' .
+
+    Then  shift, and go to state 97
+
+    $default  reduce using rule 32 (I_T)
+
+
+state 82
+
+   15 AsignState: Asign_Varable ':' '=' Expr .
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 15 (AsignState)
+
+
+state 83
+
+   35 ComplexState: '[' StateList ']' .
+
+    $default  reduce using rule 35 (ComplexState)
+
+
+state 84
+
+   33 Wd: W '(' BoolExpr ')' .
+
+    $default  reduce using rule 33 (Wd)
+
+
+state 85
+
+    9 VarList: VarList ',' Asign_Varable ':' '=' Expr .
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 9 (VarList)
+
+
+state 86
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   21     | '(' Expr . ')'
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+    ')'  shift, and go to state 87
+
+
+state 87
+
+   21 Expr: '(' Expr ')' .
+
+    $default  reduce using rule 21 (Expr)
+
+
+state 88
+
+   42 BoolExpr: '(' BoolExpr ')' .
+
+    $default  reduce using rule 42 (BoolExpr)
+
+
+state 89
+
+   16 Expr: Expr . '+' Expr
+   16     | Expr '+' Expr .
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 16 (Expr)
+
+
+state 90
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   17     | Expr '-' Expr .
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 17 (Expr)
+
+
+state 91
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   18     | Expr '*' Expr .
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+
+    $default  reduce using rule 18 (Expr)
+
+
+state 92
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   19     | Expr '/' Expr .
+   20     | Expr . '%' Expr
+
+    $default  reduce using rule 19 (Expr)
+
+
+state 93
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   20     | Expr '%' Expr .
+
+    $default  reduce using rule 20 (Expr)
+
+
+state 94
+
+   16 Expr: Expr . '+' Expr
+   17     | Expr . '-' Expr
+   18     | Expr . '*' Expr
+   19     | Expr . '/' Expr
+   20     | Expr . '%' Expr
+   36 BoolExpr: Expr RelationOp Expr .
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+    '*'  shift, and go to state 75
+    '/'  shift, and go to state 76
+    '%'  shift, and go to state 77
+
+    $default  reduce using rule 36 (BoolExpr)
+
+
+state 95
+
+   40 BoolExpr: BoolExpr '|' $@2 . BoolExpr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 53
+    BoolExpr  go to state 98
+    Const     go to state 55
+
+
+state 96
+
+   38 BoolExpr: BoolExpr '&' $@1 . BoolExpr
+
+    Iden    shift, and go to state 16
+    IntNo   shift, and go to state 47
+    RealNo  shift, and go to state 48
+    '!'     shift, and go to state 49
+    '-'     shift, and go to state 50
+    '('     shift, and go to state 51
+
+    Varable   go to state 52
+    Expr      go to state 53
+    BoolExpr  go to state 99
+    Const     go to state 55
+
+
+state 97
+
+   31 I_T: If '(' BoolExpr ')' Then .
+
+    $default  reduce using rule 31 (I_T)
+
+
+state 98
+
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   40         | BoolExpr . '|' $@2 BoolExpr
+   40         | BoolExpr '|' $@2 BoolExpr .
+
+    '&'  shift, and go to state 80
+
+    $default  reduce using rule 40 (BoolExpr)
+
+
+state 99
+
+   38 BoolExpr: BoolExpr . '&' $@1 BoolExpr
+   38         | BoolExpr '&' $@1 BoolExpr .
+   40         | BoolExpr . '|' $@2 BoolExpr
+
+    $default  reduce using rule 38 (BoolExpr)

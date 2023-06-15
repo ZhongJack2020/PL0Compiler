@@ -11,8 +11,13 @@ End
 
 //while
 
-var real a:=3,b;
-begin
+var real a:=4,b; //variable define
+/*
+----------------
+procedure
+----------------
+*/
+begin 
 while(a<3)[a:=a+1;b:=a*3;]
 end
 
