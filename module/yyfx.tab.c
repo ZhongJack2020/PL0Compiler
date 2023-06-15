@@ -84,6 +84,7 @@ FILE *yyfx;  //指向输出文件的指针
 FILE *yffx; //指向yffx.txt
 extern int yylex();
 extern FILE* yyin;
+extern int row_num, col_num;
 
 extern char key[20];
 int VarCount=0;//变量个数
@@ -117,7 +118,7 @@ struct VARLIST{
 
 
 /* Line 189 of yacc.c  */
-#line 121 "yyfx.tab.c"
+#line 122 "yyfx.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -171,7 +172,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 51 "yyfx.y"
+#line 53 "yyfx.y"
 
     int  Iv;//标识符值
     int CH;//next链
@@ -187,7 +188,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 191 "yyfx.tab.c"
+#line 192 "yyfx.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -199,7 +200,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 203 "yyfx.tab.c"
+#line 204 "yyfx.tab.c"
 
 #ifdef short
 # undef short
@@ -526,12 +527,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   116,   116,   123,   129,   134,   139,   140,   142,   147,
-     153,   172,   193,   198,   206,   208,   215,   236,   266,   297,
-     327,   355,   366,   371,   379,   386,   395,   401,   407,   412,
-     417,   428,   434,   439,   445,   451,   455,   462,   469,   469,
-     474,   474,   481,   486,   492,   499,   507,   508,   509,   510,
-     511,   512
+       0,   118,   118,   125,   131,   136,   141,   142,   144,   149,
+     155,   174,   195,   200,   208,   210,   217,   238,   268,   299,
+     329,   357,   368,   373,   381,   388,   397,   402,   408,   413,
+     418,   429,   435,   440,   446,   452,   456,   463,   470,   470,
+     475,   475,   482,   487,   493,   500,   508,   509,   510,   511,
+     512,   513
 };
 #endif
 
@@ -1499,7 +1500,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 117 "yyfx.y"
+#line 119 "yyfx.y"
     {
 				(yyval.CH)=0;
 				fprintf(yffx, "Program ::= subProg\n");
@@ -1510,7 +1511,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 124 "yyfx.y"
+#line 126 "yyfx.y"
     {/*BackPatch($3,NXQ);*/
 				GEN("Stop",0,0,0);
 				fprintf(yffx, "SubProg ::= VarDef Begin StateList End\n");
@@ -1520,7 +1521,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 130 "yyfx.y"
+#line 132 "yyfx.y"
     {
 				(yyval.CH)=0;
 				fprintf(yffx, "VarDef ::= VarDef Var VarDefList\n");
@@ -1530,7 +1531,7 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 135 "yyfx.y"
+#line 137 "yyfx.y"
     {
 				(yyval.CH)=0;
 				fprintf(yffx, "VarDef ::= Var VarDefList\n");
@@ -1540,21 +1541,21 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 139 "yyfx.y"
+#line 141 "yyfx.y"
     {(yyval.CH)=0;fprintf(yffx, "VarDefList ::= VarDefList VarList\n");;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 140 "yyfx.y"
+#line 142 "yyfx.y"
     {(yyval.CH)=0;fprintf(yffx, "VarDefList ::= VarList\n");;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 143 "yyfx.y"
+#line 145 "yyfx.y"
     {
 				FillType((yyvsp[(3) - (3)].NO),(yyvsp[(1) - (3)].First));
 				fprintf(yffx, "VarList ::= VarList , Varable\n");
@@ -1564,7 +1565,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 148 "yyfx.y"
+#line 150 "yyfx.y"
     {
 				(yyval.First)=(yyvsp[(1) - (2)].Iv);
 				FillType((yyvsp[(2) - (2)].NO),(yyval.First));
@@ -1575,7 +1576,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 154 "yyfx.y"
+#line 156 "yyfx.y"
     {
 				FillType((yyvsp[(3) - (6)].NO),(yyvsp[(1) - (6)].First));
 				fprintf(yffx, "VarList ::= VarList,Asign_Varable:=Expr\n");
@@ -1599,10 +1600,10 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 173 "yyfx.y"
+#line 175 "yyfx.y"
     {
 				(yyval.First)=(yyvsp[(1) - (5)].Iv);FillType((yyvsp[(2) - (5)].NO),(yyval.First));
-				fprintf(yffx, "Type Asign_Varable := Expr\n");
+				fprintf(yffx, "VarList ::= Type Asign_Varable := Expr\n");
 				if(VarList[(yyvsp[(2) - (5)].NO)].type==(yyvsp[(5) - (5)]._Expr).type)
 					GEN(":=",(yyvsp[(5) - (5)]._Expr).place,0,(yyvsp[(2) - (5)].NO));
 				else if((yyvsp[(5) - (5)]._Expr).type==INTTYPE && VarList[(yyvsp[(2) - (5)].NO)].type==REALTYPE)
@@ -1623,7 +1624,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 194 "yyfx.y"
+#line 196 "yyfx.y"
     {
 			(yyval.Iv)=INTTYPE;/*Type.lv=0*/
 			fprintf(yffx, "Type ::= Integer\n");
@@ -1633,7 +1634,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 199 "yyfx.y"
+#line 201 "yyfx.y"
     {
 			(yyval.Iv)=REALTYPE;/*Type.lv=1*/
 			fprintf(yffx, "Type ::= Real\n");
@@ -1643,14 +1644,14 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 206 "yyfx.y"
-    {(yyval.NO)=(yyvsp[(1) - (1)].NO);fprintf(yffx, "Asign_Varable ::=Varable\n");;}
+#line 208 "yyfx.y"
+    {(yyval.NO)=(yyvsp[(1) - (1)].NO);fprintf(yffx, "Asign_Varable ::= Varable\n");;}
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 209 "yyfx.y"
+#line 211 "yyfx.y"
     { 
 				(yyval.NO)=Entry(key);/*Varable.NO=VarCount*/
 				fprintf(yffx, "Varable ::= Iden\n");
@@ -1660,7 +1661,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 216 "yyfx.y"
+#line 218 "yyfx.y"
     {
 				(yyval._WBD).QUAD=(yyvsp[(1) - (4)].NO);(yyval._WBD).CH=NXQ-1;
 				fprintf(yffx, "AsignState ::= Asign_Varable:=Expr\n");
@@ -1684,7 +1685,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 237 "yyfx.y"
+#line 239 "yyfx.y"
     {
 			fprintf(yffx, "Expr ::= Expr+Expr\n");
 			int T=NewTemp();
@@ -1719,7 +1720,7 @@ yyreduce:
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 267 "yyfx.y"
+#line 269 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= Expr-Expr\n");
 		int T=NewTemp();
@@ -1754,7 +1755,7 @@ yyreduce:
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 298 "yyfx.y"
+#line 300 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= Expr*Expr\n");
 		int T=NewTemp();
@@ -1789,7 +1790,7 @@ yyreduce:
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 328 "yyfx.y"
+#line 330 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= Expr/Expr\n");
 		int T=NewTemp();
@@ -1822,7 +1823,7 @@ yyreduce:
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 356 "yyfx.y"
+#line 358 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= Expr%%Expr\n");
 		int T=NewTemp();
@@ -1838,7 +1839,7 @@ yyreduce:
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 367 "yyfx.y"
+#line 369 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= (Expr)\n");
 		(yyval._Expr)=(yyvsp[(2) - (3)]._Expr);
@@ -1848,7 +1849,7 @@ yyreduce:
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 372 "yyfx.y"
+#line 374 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= -Expr\n");
 		int T=NewTemp();
@@ -1861,7 +1862,7 @@ yyreduce:
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 380 "yyfx.y"
+#line 382 "yyfx.y"
     {
 		fprintf(yffx, "Expr ::= Varable\n");
 		(yyval._Expr).place=(yyvsp[(1) - (1)].NO);
@@ -1873,7 +1874,7 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 387 "yyfx.y"
+#line 389 "yyfx.y"
     { 
 		fprintf(yffx, "Expr ::= Const\n");
 		(yyval._Expr)=(yyvsp[(1) - (1)]._Expr);
@@ -1883,18 +1884,17 @@ yyreduce:
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 396 "yyfx.y"
+#line 398 "yyfx.y"
     {
 				fprintf(yffx, "StateList ::= Statement\n");
 				(yyval.CH)=(yyvsp[(1) - (1)].CH);BackPatch((yyvsp[(1) - (1)].CH),NXQ);
-				fprintf(yffx, "Expr ::= Const\n");
 			;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 402 "yyfx.y"
+#line 403 "yyfx.y"
     {
 				fprintf(yffx, "StateList ::= Statement StateList\n");
 				(yyval.CH)=(yyvsp[(1) - (2)].CH);BackPatch((yyvsp[(1) - (2)].CH),NXQ);
@@ -1904,7 +1904,7 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 408 "yyfx.y"
+#line 409 "yyfx.y"
     {
 				(yyval.CH)=0;
 				fprintf(yffx, "Statement ::= AsignState;\n");
@@ -1914,7 +1914,7 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 413 "yyfx.y"
+#line 414 "yyfx.y"
     {
 			fprintf(yffx, "Statement ::= I_T_E ComplexState;\n");
 			(yyval.CH)=Merge((yyvsp[(1) - (2)].CH),(yyvsp[(2) - (2)].CH));
@@ -1924,7 +1924,7 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 418 "yyfx.y"
+#line 419 "yyfx.y"
     { //循环语句
 			fprintf(yffx, "Statement ::= Wd ComplexState;\n");
 			GEN("j",0,0,(yyvsp[(1) - (2)]._WBD).QUAD);
@@ -1937,7 +1937,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 429 "yyfx.y"
+#line 430 "yyfx.y"
     {
 				fprintf(yffx, "I_T_E ::= I_T ComplexState Else\n");
 				int q=NXQ;GEN("j",0,0,0);BackPatch((yyvsp[(1) - (3)].CH),NXQ);(yyval.CH)=Merge((yyvsp[(2) - (3)].CH),q);
@@ -1947,7 +1947,7 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 435 "yyfx.y"
+#line 436 "yyfx.y"
     {
 			fprintf(yffx, "I_T ::= If ( BoolExpr ) Then\n");
 			BackPatch((yyvsp[(3) - (5)]._BExpr).TC,NXQ);(yyval.CH)=(yyvsp[(3) - (5)]._BExpr).FC;
@@ -1957,7 +1957,7 @@ yyreduce:
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 440 "yyfx.y"
+#line 441 "yyfx.y"
     {
 			fprintf(yffx, "I_T ::= If ( BoolExpr )\n");
 			BackPatch((yyvsp[(3) - (4)]._BExpr).TC,NXQ);(yyval.CH)=(yyvsp[(3) - (4)]._BExpr).FC;
@@ -1967,9 +1967,9 @@ yyreduce:
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 446 "yyfx.y"
+#line 447 "yyfx.y"
     {
-			fprintf(yffx, "Wd	::= W (BoolExpr) \n");
+			fprintf(yffx, "Wd ::= W (BoolExpr) \n");
 			BackPatch((yyvsp[(3) - (4)]._BExpr).TC,NXQ);(yyval._WBD).QUAD=(yyvsp[(1) - (4)].CH);(yyval._WBD).CH=(yyvsp[(3) - (4)]._BExpr).FC;
 		;}
     break;
@@ -1977,16 +1977,16 @@ yyreduce:
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 451 "yyfx.y"
-    {(yyval.CH)=NXQ;fprintf(yffx, "W	::= While\n");;}
+#line 452 "yyfx.y"
+    {(yyval.CH)=NXQ;fprintf(yffx, "W ::= While\n");;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 456 "yyfx.y"
+#line 457 "yyfx.y"
     {	
-					fprintf(yffx, "[StateList] \n");
+					fprintf(yffx, "ComplexState ::= [StateList] \n");
 					(yyval.CH)=(yyvsp[(2) - (3)].CH);	
 				;}
     break;
@@ -1994,7 +1994,7 @@ yyreduce:
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 463 "yyfx.y"
+#line 464 "yyfx.y"
     {
 				fprintf(yffx, "BoolExpr ::= Expr RelationOp Expr\n");
 				(yyval._BExpr).TC=NXQ;(yyval._BExpr).FC=NXQ+1;
@@ -2006,14 +2006,14 @@ yyreduce:
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 469 "yyfx.y"
+#line 470 "yyfx.y"
     {BackPatch((yyvsp[(1) - (2)]._BExpr).TC,NXQ);;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 470 "yyfx.y"
+#line 471 "yyfx.y"
     {
 			fprintf(yffx, "BoolExpr ::= BoolExpr & BoolExpr \n");
 			(yyval._BExpr).TC=(yyvsp[(4) - (4)]._BExpr).TC;(yyval._BExpr).FC=Merge((yyvsp[(1) - (4)]._BExpr).FC,(yyvsp[(4) - (4)]._BExpr).FC);
@@ -2023,14 +2023,14 @@ yyreduce:
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 474 "yyfx.y"
+#line 475 "yyfx.y"
     {BackPatch((yyvsp[(1) - (2)]._BExpr).FC,NXQ);;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 475 "yyfx.y"
+#line 476 "yyfx.y"
     {
 			fprintf(yffx, "BoolExpr ::= BoolExpr | BoolExpr \n");
 			(yyval._BExpr).FC=(yyvsp[(4) - (4)]._BExpr).FC;(yyval._BExpr).TC=Merge((yyvsp[(1) - (4)]._BExpr).TC,(yyvsp[(4) - (4)]._BExpr).TC);
@@ -2040,7 +2040,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 482 "yyfx.y"
+#line 483 "yyfx.y"
     {
 			fprintf(yffx, "BoolExpr ::= !BoolExpr \n");
 			(yyval._BExpr).TC=(yyvsp[(2) - (2)]._BExpr).FC;(yyval._BExpr).FC=(yyvsp[(2) - (2)]._BExpr).TC;
@@ -2050,7 +2050,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 487 "yyfx.y"
+#line 488 "yyfx.y"
     {
 			fprintf(yffx, "BoolExpr ::= (BoolExpr)\n");
 			(yyval._BExpr)=(yyvsp[(2) - (3)]._BExpr);
@@ -2060,7 +2060,7 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 493 "yyfx.y"
+#line 494 "yyfx.y"
     { 
 			fprintf(yffx, "Const ::= IntNo\n");
 			int i=Entry(key);
@@ -2072,7 +2072,7 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 500 "yyfx.y"
+#line 501 "yyfx.y"
     { 
 			fprintf(yffx, "Const ::= RealNo\n");
 			int i=Entry(key);
@@ -2084,42 +2084,42 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 507 "yyfx.y"
+#line 508 "yyfx.y"
     {strcpy((yyval._Rop),"j<");fprintf(yffx, "RelationOp ::= < \n");;}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 508 "yyfx.y"
+#line 509 "yyfx.y"
     {strcpy((yyval._Rop),"j>");fprintf(yffx, "RelationOp ::= > \n");;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 509 "yyfx.y"
+#line 510 "yyfx.y"
     {strcpy((yyval._Rop),"j=");fprintf(yffx, "RelationOp ::= = \n");;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 510 "yyfx.y"
+#line 511 "yyfx.y"
     {strcpy((yyval._Rop),"j>=");fprintf(yffx, "RelationOp ::= >= \n");;}
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 511 "yyfx.y"
+#line 512 "yyfx.y"
     {strcpy((yyval._Rop),"j!=");fprintf(yffx, "RelationOp ::= != \n");;}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 512 "yyfx.y"
+#line 513 "yyfx.y"
     {strcpy((yyval._Rop),"j<=");fprintf(yffx, "RelationOp ::= <= \n");;}
     break;
 
@@ -2338,7 +2338,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 514 "yyfx.y"
+#line 515 "yyfx.y"
 
 
 void OutputQ(void)
@@ -2368,7 +2368,8 @@ void OutputQ(void)
 
 int yyerror(char *errstr)
 {
-	fprintf(yffx,"%s\n",errstr);
+	fprintf(yffx,"(%d,%d):%s!\n",row_num, col_num,errstr);
+	// fprintf(yffx, "Error occurred in rule: %s\n", yytext);
 	return 0;
 }
 

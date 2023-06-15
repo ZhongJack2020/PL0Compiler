@@ -66,7 +66,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 51 "yyfx.y"
+#line 53 "yyfx.y"
 
     int  Iv;//±Í ∂∑˚÷µ
     int CH;//next¡¥

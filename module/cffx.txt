@@ -2,7 +2,7 @@ Keyword : var
 Identifier : real 
 Identifier : a 
 Operator : := 
-Constant : 3 
+Constant : 4 
 Delimiter : , 
 Identifier : b 
 Delimiter : ; 
@@ -13,6 +13,7 @@ procedure
 ----------------
 */ 
 Keyword : begin 
+Delimiter : ; 
 Keyword : while 
 Operator : ( 
 Identifier : a 

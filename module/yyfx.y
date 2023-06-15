@@ -13,6 +13,7 @@ FILE *yyfx;  //指向输出文件的指针
 FILE *yffx; //指向yffx.txt
 extern int yylex();
 extern FILE* yyin;
+extern int row_num, col_num;
 
 extern char key[20];
 int VarCount=0;//变量个数
@@ -44,6 +45,7 @@ struct VARLIST{
 } VarList[MAXMEMBER];
 
 %}
+
 
 %start    ProgDef
 
@@ -539,7 +541,8 @@ void OutputQ(void)
 
 int yyerror(char *errstr)
 {
-	fprintf(yffx,"%s\n",errstr);
+	fprintf(yffx,"(%d,%d):%s!\n",row_num, col_num,errstr);
+	// fprintf(yffx, "Error occurred in rule: %s\n", yytext);
 	return 0;
 }
 

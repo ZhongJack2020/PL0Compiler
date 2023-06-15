@@ -1,6 +1,6 @@
 @echo off
 del cffx.exe
-del yffx.exe
+::del yffx.exe
 del yyfx.exe
 
 flex cffx.l
